@@ -9,3 +9,4 @@ build/
 npm-debug.log
 .tern-port
 /package-lock.json
+/dummy/package-lock.json

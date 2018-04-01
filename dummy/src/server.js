@@ -7,18 +7,18 @@ import qs from "query-string";
 import {initialize} from "./app";
 import config from "config";
 
-var hostname = process.env.HOSTNAME || "localhost";
+let hostname = process.env.HOSTNAME || "localhost";
 global.__API_URL__ = config.get("apiUrl");
 
 /**
  * base html template
  */
 function getMarkup(webserver, provider) {
-  var markup = renderToString(provider),
+  let markup = renderToString(provider),
       styles = "";
 
   if (process.env.NODE_ENV === "production") {
-    styles = `<link href="${webserver}/dist/main.css" rel="stylesheet"></link>`;
+    styles = `<link href="${webserver}/dist/main.css" rel="stylesheet"/>`;
   }
 
   return `<!doctype html>
@@ -79,24 +79,23 @@ server.ext("onPreResponse", (request, reply) => {
     return reply.continue();
   }
 
-  var query    = qs.stringify(request.query);
-  var location = request.path + (query.length ? "?" + query : "");
+  let query    = qs.stringify(request.query);
+  let location = request.path + (query.length ? "?" + query : "");
 
   initialize({
     isServer: true,
     cookies: request.headers.cookie,
     currentLocation: location,
     userAgent: request.headers["user-agent"]
-  })
-    .then(({provider, blank, routes, history, location}) => {
+  }).then(({provider, blank, routes, history, location}) => {
       match({routes, history}, (error, redirectLocation, renderProps) => {
         if (redirectLocation) {
           reply.redirect(redirectLocation.pathname + redirectLocation.search);
         } else if (error || !renderProps) {
           reply.continue();
         } else {
-          var webserver = process.env.NODE_ENV === "production" ? "" : "//" + hostname + ":8080";
-          var output = (blank) ? "" : getMarkup(webserver, provider);
+          let webserver = process.env.NODE_ENV === "production" ? "" : "//" + hostname + ":8000";
+          let output = (blank) ? "" : getMarkup(webserver, provider);
 
           reply(output);
         }
