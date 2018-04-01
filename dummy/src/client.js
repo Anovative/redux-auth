@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { render } from "react-dom";
 import { initialize } from "./app";
 
 
@@ -8,7 +8,7 @@ import { initialize } from "./app";
  */
 const reactRoot = window.document.getElementById("react-root");
 initialize().then(({provider}) => {
-  ReactDOM.render(provider, reactRoot);
+  render(provider, reactRoot);
 });
 
 
