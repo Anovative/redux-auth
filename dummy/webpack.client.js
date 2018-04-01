@@ -1,9 +1,10 @@
-var webpack = require("webpack");
-var path = require("path");
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+let webpack = require("webpack");
+let path = require("path");
+let ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
   target:  "web",
+  mode: 'development',
   cache:   false,
   context: __dirname,
   devtool: false,
@@ -23,17 +24,41 @@ module.exports = {
     new ExtractTextPlugin("[name].css")
   ],
   module:  {
-    loaders: [
-      { test: /\.woff(2)?(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
-      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
-      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
-      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml" },
-      { include: /\.json$/, loaders: ["json"] },
-      { include: /\.js$/, loaders: ["babel?cacheDirectory&presets[]=es2015&presets[]=react&presets[]=stage-0"], exclude: /node_modules/ },
-      { test: /\.scss$/, loaders: ["style", "css", "sass"] }
+    rules: [
+      {
+        test: /\.woff(2)?(\?v=\d+\.\d+\.\d+)?$/,
+        loader: "url-loader?limit=10000&mimetype=application/font-woff"
+      },
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: "url-loader?limit=10000&mimetype=application/octet-stream"
+      },
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        loader: "file-loader"
+      },
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        loader: "url-loader?limit=10000&mimetype=image/svg+xml"
+      },
+      {
+        include: /\.json$/,
+        loaders: ["json"] },
+      {
+        include: /\.js$/,
+        loaders: ["babel-loader?cacheDirectory&presets[]=es2015&presets[]=react&presets[]=stage-0"],
+        exclude: /node_modules/
+      },
+      {
+        test: /\.scss$/,
+        loaders: ["style-loader", "css-loader", "sass-loader"]
+      }
     ],
     postLoaders: [
-      { test: /\.scss$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader!sass-loader", {publicPath: "/dist/"}) }
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract("style-loader", "css-loader!sass-loader", {publicPath: "/dist/"})
+      }
     ],
     noParse: [/\.min\.js/, /autoit\.js/]
   },
