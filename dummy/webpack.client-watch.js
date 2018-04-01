@@ -1,18 +1,18 @@
-var webpack = require("webpack");
-var config = require("./webpack.client.js");
+const port = 8000;
 
-var hostname = process.env.HOSTNAME || "localhost";
+let webpack = require("webpack");
+let config = require("./webpack.client.js");
+let hostname = process.env.HOSTNAME || "localhost";
 
 config.cache = true;
 config.debug = true;
 config.devtool = "eval-sourcemap";
-
 config.entry.unshift(
-  "webpack-dev-server/client?http://" + hostname + ":8080",
+  "webpack-dev-server/client?http://" + hostname + `:${port}`,
   "webpack/hot/only-dev-server"
 );
 
-config.output.publicPath = "http://" + hostname + ":8080/dist/";
+config.output.publicPath = "http://" + hostname + `:${port}/dist/`;
 config.output.hotUpdateMainFilename = "update/[hash]/update.json";
 config.output.hotUpdateChunkFilename = "update/[hash]/[id].update.js";
 
@@ -24,7 +24,7 @@ config.plugins = [
 
 config.module.postLoaders = [
   {test: /\.js$/, loaders: ["react-hot"], exclude: /node_modules/}
-]
+];
 
 config.devServer = {
   publicPath:  "http://" + hostname + ":8080/dist/",
