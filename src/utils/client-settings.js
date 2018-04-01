@@ -17,7 +17,7 @@ import {
 } from "./session-storage";
 
 // can't use "window" with node app
-var root = Function("return this")() || (42, eval)("this");
+let root = Function("return this")() || (42, eval)("this");
 
 const defaultSettings = {
   proxyIf:            function() { return false; },

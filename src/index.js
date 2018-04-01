@@ -42,7 +42,7 @@ export {updatePassword, updatePasswordFormUpdate} from "./actions/update-passwor
 export {updatePasswordModal, updatePasswordModalFormUpdate} from "./actions/update-password-modal";
 export {destroyAccount} from "./actions/destroy-account";
 // export verifyAuth from "./utils/verify-auth";
-export {getApiUrl} from "./utils/session-storage";
+export {getApdiUrl} from "./utils/session-storage";
 export {
   hideEmailSignInSuccessModal,
   hideEmailSignInErrorModal,
